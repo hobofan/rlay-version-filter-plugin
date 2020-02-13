@@ -1,3 +1,4 @@
+use async_trait::async_trait;
 use futures::prelude::*;
 use rlay_plugin_interface::prelude::*;
 use rustc_hex::FromHex;
@@ -28,16 +29,13 @@ impl FilterParams {
     }
 }
 
+#[async_trait]
 impl RlayFilter for VersionFilter {
     fn filter_name(&self) -> &'static str {
         "version"
     }
 
-    fn filter_entities<'a>(
-        &self,
-        ctx: &'a FilterContext<'a>,
-        entities: Vec<Entity>,
-    ) -> BoxFuture<'a, Vec<bool>> {
+    async fn filter_entities(&self, ctx: FilterContext, entities: Vec<Entity>) -> Vec<bool> {
         let params: FilterParams = serde_json::from_value(ctx.params.clone()).unwrap();
 
         let filter_markers = async move {
@@ -74,7 +72,7 @@ impl RlayFilter for VersionFilter {
                 .collect::<Vec<_>>()
         };
 
-        Box::pin(filter_markers)
+        filter_markers.await
     }
 }
 
@@ -116,20 +114,22 @@ impl VersionFilter {
         version_map
     }
 
-    pub async fn entities_with_versions<'a>(
-        ctx: &'a FilterContext<'a>,
+    pub async fn entities_with_versions(
+        ctx: FilterContext,
         params: FilterParams,
         entities: Vec<Entity>,
     ) -> Vec<(Entity, bool, Option<u64>)> {
         stream::iter(entities)
             .then(|entity| {
-                async {
+                let params = params.clone();
+                let ctx = ctx.clone();
+                async move {
                     match Self::entity_needs_filtering(&entity) {
                         false => (entity, false, None),
                         true => (
                             entity.clone(),
                             true,
-                            Self::get_version_number(ctx, params.clone(), entity).await,
+                            Self::get_version_number(ctx, params, entity).await,
                         ),
                     }
                 }
@@ -139,8 +139,8 @@ impl VersionFilter {
     }
 
     /// Get annotation matching the versioning annotation property and extract its value
-    pub async fn get_version_number<'a>(
-        ctx: &'a FilterContext<'a>,
+    pub async fn get_version_number(
+        ctx: FilterContext,
         params: FilterParams,
         entity: Entity,
     ) -> Option<u64> {
@@ -149,15 +149,23 @@ impl VersionFilter {
             Entity::ObjectPropertyAssertion(inner) => inner.annotations.clone(),
             _ => return None,
         };
+        let annotations = stream::iter(raw_annotations.into_iter())
+            .then(|raw_annotation| {
+                let raw_annotation = raw_annotation.clone();
+                let ctx = ctx.clone();
+                async move {
+                    ctx.backend
+                        .get_entity(&raw_annotation)
+                        .await
+                        .unwrap()
+                        .unwrap()
+                }
+            })
+            .collect::<Vec<_>>()
+            .await;
 
         let mut version_annotation = None;
-        for raw_annotation in raw_annotations {
-            let annotation = ctx
-                .backend
-                .get_entity(&raw_annotation)
-                .await
-                .unwrap()
-                .unwrap();
+        for annotation in annotations {
             let annotation = match annotation {
                 Entity::Annotation(inner) => inner,
                 _ => continue,

@@ -9,9 +9,10 @@ crate-type = ["cdylib"]
 
 [dependencies]
 cid = { package = "cid_fork_rlay", version = "0.3.1" }
-rlay-plugin-interface = { path = "/Users/hobofan/rlay/rlay-client/rlay-plugin-interface" }
+rlay-plugin-interface = { git = "https://github.com/rlay-project/rlay-client.git", rev = "c9783a7b61ddfc4716a93af23c7ee634ce31602e" }
 rustc-hex = "1.0.0"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_cbor = "0.11.1"
 futures = "0.3"
+async-trait = "0.1.2"

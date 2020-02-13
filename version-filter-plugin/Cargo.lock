@@ -21,6 +21,16 @@ version = "0.3.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "async-trait"
+version = "0.1.24"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "proc-macro2 1.0.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "quote 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "syn 1.0.14 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "autocfg"
 version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -427,8 +437,10 @@ dependencies = [
 [[package]]
 name = "rlay-backend"
 version = "0.1.0"
+source = "git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e#c9783a7b61ddfc4716a93af23c7ee634ce31602e"
 dependencies = [
  "ambassador 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "async-trait 0.1.24 (registry+https://github.com/rust-lang/crates.io-index)",
  "failure 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "rlay_ontology 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -438,9 +450,11 @@ dependencies = [
 [[package]]
 name = "rlay-plugin-interface"
 version = "0.1.0"
+source = "git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e#c9783a7b61ddfc4716a93af23c7ee634ce31602e"
 dependencies = [
  "ambassador 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "rlay-backend 0.1.0",
+ "async-trait 0.1.24 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rlay-backend 0.1.0 (git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e)",
  "rlay_ontology 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_json 1.0.47 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -647,9 +661,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "version-filter"
 version = "0.1.0"
 dependencies = [
+ "async-trait 0.1.24 (registry+https://github.com/rust-lang/crates.io-index)",
  "cid_fork_rlay 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "futures 0.3.4 (registry+https://github.com/rust-lang/crates.io-index)",
- "rlay-plugin-interface 0.1.0",
+ "rlay-plugin-interface 0.1.0 (git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e)",
  "rustc-hex 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 1.0.104 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_cbor 0.11.1 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -679,6 +694,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum ambassador 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "61874b33258f18ca7923047c12887078ccfe95c2811b03c1a09e309c19b7e50b"
 "checksum anyhow 1.0.26 (registry+https://github.com/rust-lang/crates.io-index)" = "7825f6833612eb2414095684fcf6c635becf3ce97fe48cf6421321e93bfbd53c"
 "checksum arrayref 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)" = "a4c527152e37cf757a3f78aae5a06fbeefdb07ccc535c980a3208ee3060dd544"
+"checksum async-trait 0.1.24 (registry+https://github.com/rust-lang/crates.io-index)" = "750b1c38a1dfadd108da0f01c08f4cdc7ff1bb39b325f9c82cc972361780a6e1"
 "checksum autocfg 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "f8aac770f1885fd7e387acedd76065302551364496e46b3dd00860b2f8359b9d"
 "checksum backtrace 0.3.44 (registry+https://github.com/rust-lang/crates.io-index)" = "e4036b9bf40f3cf16aba72a3d65e8a520fc4bafcdc7079aea8f848c58c5b5536"
 "checksum backtrace-sys 0.1.32 (registry+https://github.com/rust-lang/crates.io-index)" = "5d6575f128516de27e3ce99689419835fce9643a9b215a14d2b5b685be018491"
@@ -732,6 +748,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum rand_core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6fdeb83b075e8266dcc8762c22776f6877a63111121f5f8c7411e5be7eed4b"
 "checksum rand_core 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)" = "9c33a3c44ca05fa6f1807d8e6743f3824e8509beca625669633be0acbdf509dc"
 "checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
+"checksum rlay-backend 0.1.0 (git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e)" = "<none>"
+"checksum rlay-plugin-interface 0.1.0 (git+https://github.com/rlay-project/rlay-client.git?rev=c9783a7b61ddfc4716a93af23c7ee634ce31602e)" = "<none>"
 "checksum rlay_ontology 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "a849a62d18dbb2ff779f5c7791701e7affcb9f4f8abff60dbb8bbe1c927bb34b"
 "checksum rlay_ontology_build 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = "d827f106c95ee8b488460fc561293a0113fabed35c5f3142f3075cb00d9f78f4"
 "checksum rustc-demangle 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)" = "4c691c0e608126e00913e33f0ccf3727d5fc84573623b8d65b2df340b5201783"
