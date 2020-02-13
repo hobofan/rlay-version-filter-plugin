@@ -1,0 +1,17 @@
+[package]
+name = "version-filter"
+version = "0.1.0"
+authors = ["Maximilian Goisser <goisser94@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+cid = { package = "cid_fork_rlay", version = "0.3.1" }
+rlay-plugin-interface = { path = "/Users/hobofan/rlay/rlay-client/rlay-plugin-interface" }
+rustc-hex = "1.0.0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_cbor = "0.11.1"
+futures = "0.3"

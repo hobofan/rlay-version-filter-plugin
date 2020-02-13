@@ -1,0 +1,29 @@
+[
+  {
+    "key": "urlAnnotationProperty",
+    "assertion": {
+      "type": "DataProperty",
+      "annotations": [
+        "0x019580031b20428df13c43218f450d449c62438a7a491ab1c0eb87ab16391ebe31ec8592e03d"
+      ]
+    }
+  },
+  {
+    "key": "sha256Checksum",
+    "assertion": {
+      "type": "DataProperty",
+      "annotations": [
+        "0x019580031b20eae6866f060b8b1dc8421c6df43441f1a23c4e93015a67bba010131cf22bf039"
+      ]
+    }
+  },
+  {
+    "key": "alternativeUrl",
+    "assertion": {
+      "type": "DataProperty",
+      "annotations": [
+        "0x019580031b207601ac7214fb3a19e6c8581a3de0dac73d7443b52e81e66fd8075c1e67d9a6f1"
+      ]
+    }
+  }
+]
